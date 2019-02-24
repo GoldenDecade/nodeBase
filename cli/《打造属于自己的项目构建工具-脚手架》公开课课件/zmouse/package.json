@@ -1,0 +1,11 @@
+{
+  "name": "zmouse",
+  "version": "2.0.0",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.16.0"
+  },
+  "bin": {
+		"zmouse": "bin/index.js"
+ 	}
+}
