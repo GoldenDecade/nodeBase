@@ -5,13 +5,21 @@ const ejs = require('ejs')
 //创建APP应用 ==》 http.createServer()
 const app = express();
 
-
+/*
 //==使用 ejs 模板 步骤： 1.设置目录 2. 注册模板引擎==================
 //1. 设置模板存放目录
 app.set('views', __dirname + '/views') // 第一个参数必须是views（不可变）， 第二个参数是目录名
 //2. 注册模板引擎
 app.set('view engine', 'ejs') // 第一个参数必须是 view engine； 第二个参数必须和 app.engine 中的第一个参数一致，表示用什么引擎解析模板
+*/
 
+//==使用 html 模板 步骤： ======================
+//1. 定义模板引擎
+app.engine('html', ejs.__express) // ejs.__express 相当于调用ejs.renderFile方法
+//2. 设置模板存放目录
+app.set('views', __dirname + '/views')
+//3. 注册模板引擎
+app.set('view engine', 'html')
 /*
 * get
 * */
