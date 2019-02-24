@@ -2,6 +2,7 @@
 const express = require('express');
 const ejs = require('ejs');
 const path = require('path');
+const mongoose = require('mongoose');
 
 //创建APP应用 ==》 http.createServer()
 const app = express();
@@ -23,5 +24,22 @@ app.set('view engine', 'ejs'); // 第一个参数必须是 view engine； 第二
 app.use('/admin', require('./routers/admin'));
 
 
-//监听app请求
-app.listen(8081);
+//mongo
+mongoose.connect('mongodb://localhost:27017/blog', {useNewUrlParser: true}, (err)=> {
+  if(err) {
+    console.log('connect failed');
+  }else {
+    console.log('connect success');
+    //连接成功之后  再监听app请求
+    app.listen(8081);
+  }
+});
+const db = mongoose.connection;
+db.on('error', ()=> {
+  console.log('connection error.');
+});
+db.once('open', ()=> {
+  console.log('mongodb blog has connected.');
+})
+
+
