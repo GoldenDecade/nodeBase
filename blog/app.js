@@ -3,9 +3,14 @@ const express = require('express');
 const ejs = require('ejs');
 const path = require('path');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 //创建APP应用 ==》 http.createServer()
 const app = express();
+
+//bodyParser 为 每个请求的 request 对象增加 req.body ； 用来显示请求携带的数据
+// 最佳实践中： 要求bodyParser针对不同的MIME type分别写出不同的 jsonParser /urlencodedParser 详情见 npm中的介绍
+app.use(bodyParser.urlencoded({extended: true}));// 设置true，可以解析所有类型的数据；
 
 //设置静态文件托管
 //当用户访问的url以 /public开始，那么直接返回对应__dirname + '/public' 下的文件
