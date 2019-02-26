@@ -37,10 +37,17 @@
             //这里不能加headers
             // mode: 'no-cors'
           }).then(res => {
-            //必须使用 res.json();
-            return res.json();})
+            if(res.ok) {// 即使 404 / 500； 依然会走resolve； 只有当网络故障的时候 才会走 reject；
+              //必须使用 res.json(); 无论数据是什么格式
+              return res.json();
+            }
+
+          }, rej => {
+            //只有当网络故障的时候才会走到这里
+            console.log('rej');
+            console.log(rej);
+          })
               .catch(error => console.error('Error: ', error))
-              .then(res => console.log('success get: ', res));
 
 
           console.log(document.querySelector('input[name="username"]').value);
@@ -59,7 +66,6 @@
             // mode: 'cors'
           }).then(res => {console.log(res); return res.json();})
               .catch(error => console.error('Error: ', error))
-              .then(res => console.log('success post: ', res));
         }else {
           console.log('not support fetch method');
         }
