@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <title>EJS模板</title>
+</head>
+<body>
+<h1>EJS模板引擎  使用 ejs文件 作为模板解析</h1>
+<p>这是很简单的一个小流程就不在一一的标注流程了,注释的很清楚了 132222</p>
+<p>这里是姓名: <span><%= name %></span></p><!--这里显示js文件传过来的name值:webarn-->
+<p>这里是性别: <span><%= sex %></span></p><!--这里显示js文件传过来的sex值:'男'-->
+
+
+<p>这里是性别: <span><%= content %></span></p><!--这里显示js文件传过来的content值,可以死是json,接受服务器所传的东西,方便前段展示-->
+
+<section class="register">
+    <input type="text" name="username" placeholder="用户" class="reg_username" value="21">
+    <input type="password" name="password" placeholder="密码" class="reg_psd" value="2">
+    <input type="button" id="register" value="注册">
+    <input type="button" id="login" value="登录">
+</section>
+
+
+<script>
+
+    window.onload = function() {
+      document.querySelector('#register').onclick = ()=> {
+        if(window.fetch) {
+          // let get_url = 'http://127.0.0.1:8081/admin/user';
+          let get_url = 'http://localhost:8081/admin/user';
+          fetch(get_url, {
+            method: 'GET',
+            //这里不能加headers
+            // mode: 'no-cors'
+          }).then(res => {
+            //必须使用 res.json();
+            return res.json();})
+              .catch(error => console.error('Error: ', error))
+              .then(res => console.log('success get: ', res));
+
+
+          console.log(document.querySelector('input[name="username"]').value);
+          let url = 'http://localhost:8081/admin/user1'; // localhost 和 127.0.0.1 会出现跨域的问题
+          // let url = 'http://127.0.0.1:8081/admin/user1';
+          let data = {
+            username: document.querySelector('input[name="username"]').value,
+            password: document.querySelector('input[name="password"]').value
+          }
+          fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: { // 必须加
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            // mode: 'cors'
+          }).then(res => {console.log(res); return res.json();})
+              .catch(error => console.error('Error: ', error))
+              .then(res => console.log('success post: ', res));
+        }else {
+          console.log('not support fetch method');
+        }
+      }
+
+    }
+</script>
+</body>
+
+</html>

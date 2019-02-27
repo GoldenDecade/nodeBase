@@ -23,7 +23,7 @@ app.set('view engine', 'ejs'); // 第一个参数必须是 view engine； 第二
 //使用路由管理请求
 app.use('/admin', require('./routers/admin'));
 app.use('/api', require('./routers/api'));
-
+app.use('/', require('./routers/main'))
 
 //mongo
 mongoose.connect('mongodb://localhost:27017/blog', {useNewUrlParser: true}, (err)=> {
